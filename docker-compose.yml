@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+    api:
+        build: .
+        container_name: django-backend
+        env_file:
+            - .env
+        ports:
+            - "8000:8000"
+        depends_on:
+            - postres
+            - redis
+
+    postgres:
+        image: postgres:16
+        container_name: postgres
+        environment:
+            POSTGRES_DB: d_saas
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 1234
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+volumes:
+    postgres_data:
