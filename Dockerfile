@@ -16,9 +16,8 @@ COPY requirements/ requirements/
 
 RUN pip-sync requirements/production.txt
 
-COPY backend/ backend/
-COPY manage.py .
+COPY . .
 
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
 
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--log-level", "debug", "--access-logfile", "-", "--error-logfile", "-"]
